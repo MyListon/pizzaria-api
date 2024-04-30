@@ -1,8 +1,6 @@
 package com.pizzaria.pizzariaapi.models;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 
@@ -12,8 +10,13 @@ public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
     private Integer quantidade;
+
+    @Column
     private BigDecimal subtotal;
+
     @ManyToOne
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
