@@ -1,9 +1,6 @@
 package com.pizzaria.pizzariaapi.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -12,7 +9,11 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
     private String nome;
+
+    @Column
     private BigDecimal preco;
 
     // Getters e setters

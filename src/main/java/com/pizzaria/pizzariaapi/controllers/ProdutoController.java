@@ -17,7 +17,7 @@ public class ProdutoController {
     private ProdutoRepository produtoRepository;
 
     // CREATE
-    @PostMapping
+    @PostMapping("/criar-produto")
     public ResponseEntity<Produto> criarProduto(@RequestBody Produto produto) {
         try {
             Produto novoProduto = produtoRepository.save(produto);
