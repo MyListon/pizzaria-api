@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class PedidoController {
     @PostMapping("/criar-pedido")
     public ResponseEntity<Pedido> criarPedido(@RequestBody Pedido pedido) {
         try {
-            pedido.setDataHora(LocalDate.now()); // Definindo a data e hora do pedido para o momento atual
+            pedido.setDataHora(LocalDateTime.now()); // Definindo a data e hora do pedido para o momento atual
             Pedido novoPedido = pedidoRepository.save(pedido);
             return new ResponseEntity<>(novoPedido, HttpStatus.CREATED);
         } catch (Exception e) {
