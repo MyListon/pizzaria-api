@@ -10,10 +10,16 @@ public class Cliente {
     @Column
     private String nome;
     @Column
-    private String email;
+    private String telefone;
 
-    // Getters e setters
+    @Column
+    private String endereço;
 
+    @Column
+    private String login;
+
+    @Column
+    private String senha;
 
     public Long getId() {
         return id;
@@ -31,11 +37,35 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getEmail() {
-        return email;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEndereço() {
+        return endereço;
+    }
+
+    public void setEndereço(String endereço) {
+        this.endereço = endereço;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class PedidoController {
+
     @Autowired
     private PedidoRepository pedidoRepository;
 
@@ -21,6 +23,7 @@ public class PedidoController {
     @PostMapping("/criar-pedido")
     public ResponseEntity<Pedido> criarPedido(@RequestBody Pedido pedido) {
         try {
+            pedido.setDataHora(LocalDate.now()); // Definindo a data e hora do pedido para o momento atual
             Pedido novoPedido = pedidoRepository.save(pedido);
             return new ResponseEntity<>(novoPedido, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -29,7 +32,7 @@ public class PedidoController {
     }
 
     // READ
-    @GetMapping
+    @GetMapping("/listar-pedidos")
     public ResponseEntity<List<Pedido>> listarPedidos() {
         try {
             List<Pedido> pedidos = pedidoRepository.findAll();
@@ -43,7 +46,7 @@ public class PedidoController {
     }
 
     // READ by ID
-    @GetMapping("/{id}")
+    @GetMapping("/pedido/{id}")
     public ResponseEntity<Pedido> buscarPedidoPorId(@PathVariable("id") long id) {
         Optional<Pedido> pedido = pedidoRepository.findById(id);
         if (pedido.isPresent()) {
@@ -53,25 +56,36 @@ public class PedidoController {
         }
     }
 
-    // UPDATE
-    @PutMapping("/{id}")
-    public ResponseEntity<Pedido> atualizarPedido(@PathVariable("id") long id, @RequestBody Pedido pedido) {
+    // CREATE Fornada para um Pedido específico
+    @PostMapping("/pedido/{id}/criar-fornada")
+    public ResponseEntity<Pedido> criarFornadaParaPedido(@PathVariable("id") long id, @RequestBody Pedido.Fornada fornada) {
         Optional<Pedido> pedidoData = pedidoRepository.findById(id);
         if (pedidoData.isPresent()) {
-            Pedido _pedido = pedidoData.get();
-            _pedido.setId(pedido.getId());
-            _pedido.setTotal(pedido.getTotal());
-
-            // Adicione outras propriedades a serem atualizadas conforme necessário
-
-            return new ResponseEntity<>(pedidoRepository.save(_pedido), HttpStatus.OK);
+            Pedido pedido = pedidoData.get();
+            pedido.setFornada(fornada);
+            pedidoRepository.save(pedido);
+            return new ResponseEntity<>(pedido, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    // DELETE
-    @DeleteMapping("/{id}")
+    // DELETE Fornada para um Pedido específico
+    @DeleteMapping("/pedido/{id}/deletar-fornada")
+    public ResponseEntity<Pedido> deletarFornadaParaPedido(@PathVariable("id") long id) {
+        Optional<Pedido> pedidoData = pedidoRepository.findById(id);
+        if (pedidoData.isPresent()) {
+            Pedido pedido = pedidoData.get();
+            pedido.setFornada(null);
+            pedidoRepository.save(pedido);
+            return new ResponseEntity<>(pedido, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // DELETE Pedido
+    @DeleteMapping("/pedido/{id}")
     public ResponseEntity<HttpStatus> deletarPedido(@PathVariable("id") long id) {
         try {
             pedidoRepository.deleteById(id);
@@ -80,6 +94,4 @@ public class PedidoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
 }

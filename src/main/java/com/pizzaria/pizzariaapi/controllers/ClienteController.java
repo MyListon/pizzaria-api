@@ -16,17 +16,15 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    //Implemente os métodos CRUD aqui
-
     // CREATE
-    @PostMapping
+    @PostMapping("/criar-cliente")
     public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
         Cliente novoCliente = clienteRepository.save(cliente);
         return new ResponseEntity<>(novoCliente, HttpStatus.CREATED);
     }
 
     // READ
-    @GetMapping
+    @GetMapping("/listar-cliente")
     public ResponseEntity<List<Cliente>> listarClientes() {
         List<Cliente> clientes = clienteRepository.findAll();
         return new ResponseEntity<>(clientes, HttpStatus.OK);
@@ -50,8 +48,10 @@ public class ClienteController {
         if (clienteData.isPresent()) {
             Cliente _cliente = clienteData.get();
             _cliente.setNome(cliente.getNome());
-            _cliente.setEmail(cliente.getEmail());
-            // Adicione outras propriedades a serem atualizadas conforme necessário
+            _cliente.setEndereço(cliente.getEndereço());
+            _cliente.setTelefone(cliente.getTelefone());
+            _cliente.setLogin(cliente.getLogin());
+            _cliente.setSenha(cliente.getSenha());
 
             return new ResponseEntity<>(clienteRepository.save(_cliente), HttpStatus.OK);
         } else {
