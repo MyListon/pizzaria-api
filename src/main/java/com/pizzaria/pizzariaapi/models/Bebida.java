@@ -3,6 +3,8 @@ package com.pizzaria.pizzariaapi.models;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Bebida {
@@ -19,6 +21,9 @@ public class Bebida {
 
     @OneToOne(mappedBy = "bebida")
     private BebidaPedida bebidaPedida;
+
+    @ManyToMany(mappedBy = "bebidas")
+    private Set<Pedido> pedidos = new HashSet<>();
 
     // Getters e Setters
 
