@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Pedido {
@@ -17,8 +19,18 @@ public class Pedido {
     @Column
     private LocalDate dataHora;
 
+    @ManyToOne
+    private Cliente cliente;
+
     @Embedded
     private Fornada fornada;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pedido_bebida",
+            joinColumns = @JoinColumn(name = "pedido_id"),
+            inverseJoinColumns = @JoinColumn(name = "bebida_id"))
+    private Set<Bebida> bebidas = new HashSet<>();
 
     public Long getId() {
         return id;

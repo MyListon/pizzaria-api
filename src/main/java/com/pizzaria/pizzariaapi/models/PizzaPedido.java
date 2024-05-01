@@ -15,6 +15,14 @@ public class PizzaPedido {
     @JoinColumn(name = "idPedido")
     private Pedido pedido;
 
+    @ManyToOne
+    @JoinColumn(name = "idPizza")
+    private Pizza pizza;
+
+    @ManyToOne
+    @JoinColumn(name = "idTamanho")
+    private Tamanho tamanho;
+
     @Entity
     public static class Pizza {
 

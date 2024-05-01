@@ -21,6 +21,8 @@ public class Cliente {
     @Column
     private String senha;
 
+
+
     public Long getId() {
         return id;
     }
