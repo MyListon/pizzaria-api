@@ -15,16 +15,10 @@ public class Pedido {
     private Long id;
 
     @Column
-    private LocalDate data;
+    private LocalDate dataHora;
 
-    @Column
-    private BigDecimal total;
-
-    @OneToMany(mappedBy = "pedido")
-    private List<ItemPedido> itens = new ArrayList<>();
-
-    // Getters e setters
-
+    @Embedded
+    private Fornada fornada;
 
     public Long getId() {
         return id;
@@ -34,27 +28,56 @@ public class Pedido {
         this.id = id;
     }
 
-    public LocalDate getData() {
-        return data;
+    public LocalDate getDataHora() {
+        return dataHora;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
+    public void setDataHora(LocalDate dataHora) {
+        this.dataHora = dataHora;
     }
 
-    public BigDecimal getTotal() {
-        return total;
+    public Fornada getFornada() {
+        return fornada;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+    public void setFornada(Fornada fornada) {
+        this.fornada = fornada;
     }
 
-    public List<ItemPedido> getItens() {
-        return itens;
-    }
+    @Embeddable
+    public static class Fornada {
 
-    public void setItens(List<ItemPedido> itens) {
-        this.itens = itens;
+        @Column
+        private Long idFornada;
+
+        @Column
+        private int numFornada;
+
+        @Column
+        private int qtdPizzas;
+
+        public Long getIdFornada() {
+            return idFornada;
+        }
+
+        public void setIdFornada(Long idFornada) {
+            this.idFornada = idFornada;
+        }
+
+        public int getNumFornada() {
+            return numFornada;
+        }
+
+        public void setNumFornada(int numFornada) {
+            this.numFornada = numFornada;
+        }
+
+        public int getQtdPizzas() {
+            return qtdPizzas;
+        }
+
+        public void setQtdPizzas(int qtdPizzas) {
+            this.qtdPizzas = qtdPizzas;
+        }
     }
 }
