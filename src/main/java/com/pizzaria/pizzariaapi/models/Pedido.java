@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Pedido {
     private Long id;
 
     @Column
-    private LocalDate dataHora;
+    private LocalDateTime dataHora;
 
     @ManyToOne
     private Cliente cliente;
@@ -40,11 +41,11 @@ public class Pedido {
         this.id = id;
     }
 
-    public LocalDate getDataHora() {
+    public LocalDateTime getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(LocalDate dataHora) {
+    public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
     }
 
